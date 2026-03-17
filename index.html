@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TempoCI — Chronomètre et minuteur minimaliste" />
+  <meta name="theme-color" content="#FF8C00" />
   <title>TempoCI</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
   <!-- ═══ NAVBAR ═══ -->
-  <nav class="navbar">
+  <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="nav-inner">
 
       <div class="logo">
@@ -22,14 +26,16 @@
         <span class="logo-text">TempoCI</span>
       </div>
 
-      <div class="tab-switcher" id="tabSwitcher">
-        <button class="tab-btn active" data-tab="chrono">Chrono</button>
-        <button class="tab-btn" data-tab="timer">Minuteur</button>
-        <button class="tab-btn" data-tab="about">À propos</button>
+      <div class="tab-switcher" id="tabSwitcher" role="tablist">
+        <button class="tab-btn active" data-tab="chrono" role="tab" aria-selected="true" aria-controls="tab-chrono">Chrono</button>
+        <button class="tab-btn" data-tab="timer" role="tab" aria-selected="false" aria-controls="tab-timer">Minuteur</button>
+        <button class="tab-btn" data-tab="history" role="tab" aria-selected="false" aria-controls="tab-history">Historique</button>
+        <button class="tab-btn" data-tab="about" role="tab" aria-selected="false" aria-controls="tab-about">À propos</button>
       </div>
 
       <div class="nav-right">
         <button class="dark-toggle" id="darkToggle" aria-label="Basculer le thème">☽</button>
+        <button class="nav-icon-btn" id="fullscreenToggle" aria-label="Plein écran">⛶</button>
         <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">
           <span></span>
           <span></span>
@@ -44,10 +50,10 @@
   <main>
 
     <!-- ── Chrono ── -->
-    <section id="tab-chrono" class="tab-pane active">
+    <section id="tab-chrono" class="tab-pane active" role="tabpanel" aria-label="Chronomètre">
 
       <div class="circle-display">
-        <svg class="circle-svg" width="300" height="300" viewBox="0 0 300 300">
+        <svg class="circle-svg" width="300" height="300" viewBox="0 0 300 300" aria-hidden="true">
           <circle class="circle-track" cx="150" cy="150" r="130" />
           <circle class="circle-arc chrono-arc" id="chronoArc"
             cx="150" cy="150" r="130"
@@ -56,7 +62,7 @@
             transform="rotate(-90 150 150)" />
         </svg>
         <div class="circle-center">
-          <span class="time-display" id="chronoDisplay">00:00.00</span>
+          <span class="time-display" id="chronoDisplay" aria-live="polite" aria-atomic="true">00:00.00</span>
         </div>
       </div>
 
@@ -65,39 +71,46 @@
       <div class="lap-list hidden" id="lapList">
         <div class="lap-header">
           <span class="lap-label">Lap times</span>
-          <span class="lap-count" id="lapCount"></span>
+          <div class="lap-header-right">
+            <span class="lap-count" id="lapCount"></span>
+            <button class="export-btn" id="exportLapBtn" aria-label="Exporter les tours">Exporter</button>
+          </div>
         </div>
         <div class="lap-items" id="lapItems"></div>
+      </div>
+
+      <div class="keyboard-hints">
+        <kbd>Espace</kbd> Lancer/Pause · <kbd>L</kbd> Lap · <kbd>R</kbd> Reset
       </div>
 
     </section>
 
     <!-- ── Timer ── -->
-    <section id="tab-timer" class="tab-pane">
+    <section id="tab-timer" class="tab-pane" role="tabpanel" aria-label="Minuteur">
 
       <div class="timer-input-row" id="timerInputRow">
         <div class="spinner" data-key="h">
-          <label class="spin-label">H</label>
-          <button class="spin-btn spin-up">▲</button>
-          <span class="spin-val" id="spinH">00</span>
-          <button class="spin-btn spin-down">▼</button>
+          <label class="spin-label" id="labelH">H</label>
+          <button class="spin-btn spin-up" aria-label="Augmenter les heures">▲</button>
+          <span class="spin-val" id="spinH" aria-labelledby="labelH">00</span>
+          <button class="spin-btn spin-down" aria-label="Diminuer les heures">▼</button>
         </div>
         <div class="spinner" data-key="m">
-          <label class="spin-label">M</label>
-          <button class="spin-btn spin-up">▲</button>
-          <span class="spin-val" id="spinM">05</span>
-          <button class="spin-btn spin-down">▼</button>
+          <label class="spin-label" id="labelM">M</label>
+          <button class="spin-btn spin-up" aria-label="Augmenter les minutes">▲</button>
+          <span class="spin-val" id="spinM" aria-labelledby="labelM">05</span>
+          <button class="spin-btn spin-down" aria-label="Diminuer les minutes">▼</button>
         </div>
         <div class="spinner" data-key="s">
-          <label class="spin-label">S</label>
-          <button class="spin-btn spin-up">▲</button>
-          <span class="spin-val" id="spinS">00</span>
-          <button class="spin-btn spin-down">▼</button>
+          <label class="spin-label" id="labelS">S</label>
+          <button class="spin-btn spin-up" aria-label="Augmenter les secondes">▲</button>
+          <span class="spin-val" id="spinS" aria-labelledby="labelS">00</span>
+          <button class="spin-btn spin-down" aria-label="Diminuer les secondes">▼</button>
         </div>
       </div>
 
       <div class="circle-display hidden" id="timerCircle">
-        <svg class="circle-svg" width="300" height="300" viewBox="0 0 300 300">
+        <svg class="circle-svg" width="300" height="300" viewBox="0 0 300 300" aria-hidden="true">
           <circle class="circle-track" cx="150" cy="150" r="130" />
           <circle class="circle-arc timer-arc" id="timerArc"
             cx="150" cy="150" r="130"
@@ -106,7 +119,7 @@
             transform="rotate(-90 150 150)" />
         </svg>
         <div class="circle-center">
-          <span class="time-display" id="timerDisplay">05:00.00</span>
+          <span class="time-display" id="timerDisplay" aria-live="polite" aria-atomic="true">05:00.00</span>
           <small class="timer-label-text" id="timerLabelText">restant</small>
         </div>
       </div>
@@ -122,10 +135,26 @@
         <button class="preset-btn" data-min="30">30 min</button>
       </div>
 
+      <div class="keyboard-hints">
+        <kbd>Espace</kbd> Lancer/Pause · <kbd>R</kbd> Reset
+      </div>
+
+    </section>
+
+    <!-- ── Historique ── -->
+    <section id="tab-history" class="tab-pane" role="tabpanel" aria-label="Historique">
+      <div class="history-wrapper">
+        <div class="history-header">
+          <h3 class="history-title">Historique des sessions</h3>
+          <button class="export-btn" id="clearHistoryBtn" aria-label="Vider l'historique">Vider</button>
+        </div>
+        <p class="history-empty" id="historyEmpty">Aucune session enregistrée.</p>
+        <div class="history-items" id="historyItems"></div>
+      </div>
     </section>
 
     <!-- ── À propos ── -->
-    <section id="tab-about" class="tab-pane">
+    <section id="tab-about" class="tab-pane" role="tabpanel" aria-label="À propos">
 
       <div class="about-wrapper">
 
@@ -138,7 +167,7 @@
           <h3 class="about-title">TempoCI</h3>
           <p class="about-text">
             Jour 3 du Challenge 14-14-14. TempoCI est un chronomètre et minuteur minimaliste
-            conçu en HTML, CSS (SASS) et JavaScript pur — aucun framework.
+            conçu en HTML, CSS et JavaScript pur — aucun framework.
           </p>
           <p class="about-text">
             Le design mise sur l'épure totale et les micro-interactions : animations de boutons,
@@ -180,6 +209,14 @@
             <div class="stack-item">JavaScript (Vanilla)</div>
             <p class="stack-note">Aucun framework</p>
           </div>
+        </div>
+
+        <div class="card about-shortcuts-card">
+          <p class="card-section-label">Raccourcis clavier</p>
+          <div class="shortcut-row"><kbd>Espace</kbd> <span>Lancer / Pause</span></div>
+          <div class="shortcut-row"><kbd>L</kbd> <span>Enregistrer un tour (chrono)</span></div>
+          <div class="shortcut-row"><kbd>R</kbd> <span>Réinitialiser</span></div>
+          <div class="shortcut-row"><kbd>F</kbd> <span>Plein écran</span></div>
         </div>
 
         <div class="about-footer-card">

@@ -568,6 +568,169 @@ main {
   font-family: 'DM Sans', sans-serif;
 }
 
+/* ── Export Button ────────────────────────────── */
+.export-btn {
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-s);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s ease;
+}
+.export-btn:hover {
+  border-color: #FF8C00;
+  color: #FF8C00;
+}
+.export-btn.copied {
+  border-color: #009E49;
+  color: #009E49;
+}
+
+.lap-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Keyboard Hints ──────────────────────────── */
+.keyboard-hints {
+  font-size: 11px;
+  color: var(--text-s);
+  font-family: 'DM Sans', sans-serif;
+  text-align: center;
+  opacity: 0.6;
+}
+
+kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text);
+  margin: 0 2px;
+}
+
+/* ── Fullscreen Button ───────────────────────── */
+.nav-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-s);
+  transition: all 0.2s ease;
+}
+.nav-icon-btn:hover {
+  border-color: #FF8C00;
+  color: #FF8C00;
+}
+
+/* ── History Tab ─────────────────────────────── */
+.history-wrapper {
+  width: 100%;
+  max-width: 560px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.history-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.history-empty {
+  text-align: center;
+  color: var(--text-s);
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  padding: 40px 0;
+}
+
+.history-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  animation: slideIn 0.3s ease;
+}
+
+.history-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.history-detail {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.history-type {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.history-value {
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  color: var(--text-s);
+}
+
+.history-date {
+  font-size: 11px;
+  color: var(--text-s);
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+
+/* ── Shortcuts Card (About) ──────────────────── */
+.about-shortcuts-card {
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-s);
+  font-family: 'DM Sans', sans-serif;
+}
+
 /* ── Utility ──────────────────────────────────── */
 .hidden { display: none !important; }
 
@@ -722,6 +885,16 @@ main {
   /* Lap list pleine largeur */
   .lap-list {
     max-width: 100%;
+  }
+
+  /* Masquer le fullscreen sur très petit écran */
+  .nav-icon-btn {
+    display: none;
+  }
+
+  /* Masquer les raccourcis clavier sur mobile */
+  .keyboard-hints {
+    display: none;
   }
 }
 
