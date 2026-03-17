@@ -570,3 +570,158 @@ main {
 
 /* ── Utility ──────────────────────────────────── */
 .hidden { display: none !important; }
+
+/* ── Nav right (dark toggle + hamburger) ─────── */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Hamburger button ─────────────────────────── */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s ease;
+}
+.menu-toggle:hover {
+  border-color: #FF8C00;
+}
+.menu-toggle span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--text-s);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease, width 0.25s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X */
+.menu-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.menu-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile menu panel (tab-switcher en overlay) */
+@keyframes menuDrop {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ≤ 540 px ──────────────────────── */
+@media (max-width: 540px) {
+
+  /* Nav inner */
+  .nav-inner {
+    padding: 0 16px;
+    position: relative;
+  }
+
+  /* Cacher le tab-switcher dans la barre */
+  .tab-switcher {
+    display: none;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 16px 12px;
+    gap: 4px;
+    z-index: 99;
+    animation: menuDrop 0.2s ease;
+  }
+
+  /* Ouvert */
+  .tab-switcher.open {
+    display: flex;
+  }
+
+  /* Boutons dans le menu mobile */
+  .tab-switcher .tab-btn {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .tab-switcher .tab-btn.active {
+    background: var(--card);
+    font-weight: 600;
+  }
+
+  /* Montrer le hamburger */
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* Ajustements main */
+  main {
+    padding: 32px 16px 64px;
+  }
+
+  /* Circle + time légèrement réduits */
+  .circle-display {
+    width: 260px;
+    height: 260px;
+  }
+  .circle-svg {
+    width: 260px;
+    height: 260px;
+  }
+  .time-display {
+    font-size: 44px;
+  }
+  .time-display.done {
+    font-size: 38px;
+  }
+
+  /* Spinners plus serrés */
+  .timer-input-row {
+    gap: 10px;
+  }
+  .spin-val {
+    font-size: 28px;
+    width: 48px;
+  }
+  .spin-btn {
+    width: 40px;
+  }
+
+  /* Presets en scroll horizontal */
+  .preset-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .preset-btn {
+    flex-shrink: 0;
+  }
+
+  /* About grid en colonne */
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Lap list pleine largeur */
+  .lap-list {
+    max-width: 100%;
+  }
+}
+

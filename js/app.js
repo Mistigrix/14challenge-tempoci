@@ -308,12 +308,35 @@ $$('.preset-btn').forEach(btn => {
 // ═════════════════════════════════════════════════════
 // TAB SWITCHING
 // ═════════════════════════════════════════════════════
+const tabSwitcherEl = $('tabSwitcher');
+
+function closeMenu() {
+  tabSwitcherEl.classList.remove('open');
+  $('menuToggle').classList.remove('open');
+  $('menuToggle').setAttribute('aria-expanded', 'false');
+}
+
 $$('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
     $$('.tab-btn').forEach(b  => b.classList.toggle('active', b === btn));
     $$('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+    closeMenu();
   });
+});
+
+// ═════════════════════════════════════════════════════
+// MENU HAMBURGER
+// ═════════════════════════════════════════════════════
+$('menuToggle').addEventListener('click', () => {
+  const isOpen = tabSwitcherEl.classList.toggle('open');
+  $('menuToggle').classList.toggle('open', isOpen);
+  $('menuToggle').setAttribute('aria-expanded', String(isOpen));
+});
+
+// Fermer le menu en cliquant en dehors
+document.addEventListener('click', e => {
+  if (!e.target.closest('.navbar')) closeMenu();
 });
 
 // ═════════════════════════════════════════════════════
